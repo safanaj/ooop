@@ -1,0 +1,18 @@
+Source: ooop
+Section: python
+Priority: extra
+Build-Depends: debhelper (>= 7.0.50~), quilt
+Build-Depends-Indep: python-support (>= 1.0)
+Maintainer: Marco Bardelli <marco.bardelli@servabit.it>
+Standards-Version: 3.8.4
+XS-Python-Version: >= 2.6
+
+Package: python-ooop
+Section: python
+Priority: extra
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Provides: ${python:Provides}
+Description: Open Object On Python
+ Un API ORM degno di questo nome per l'openerp-server
+

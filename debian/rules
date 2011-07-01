@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+include /usr/share/python/python.mk
+dscname=$(shell dpkg-parsechangelog | grep ^Source | cut -d' ' -f2)
+origver=$(shell dpkg-parsechangelog | grep ^Version | cut -d' ' -f2 | cut -d'-' -f1)
+
+get-orig-source:
+	dh_testdir
+	test -d $(CURDIR)/.git || exit 1
+	mkdir $(dscname)-$(origver)
+	git ls-files | grep -v -e '^debian' -e '^.gitignore' | tar -T - -cf - | tar -C $(dscname)-$(origver) -xf -
+	tar -czf ../$(dscname)_$(origver).orig.tar.gz $(dscname)-$(origver)
+	rm -rf $(dscname)-$(origver)
+
+override_dh_auto_clean:
+	dh_auto_clean
+	-rm -rf *.egg-info
+
+%:
+	dh $@
+
