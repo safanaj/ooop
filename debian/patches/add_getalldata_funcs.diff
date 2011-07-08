@@ -51,7 +51,7 @@
          return '<Objects from %s> %i elements' % (self.model, len(self.objects))
  
 +    def getdata(self, fields=None):
-+        return self._ooop.getdata(self.model, self.objects, fields)
++        return self.manager._ooop.getdata(self.model, self.objects, fields)
 +
  
  class Manager:
