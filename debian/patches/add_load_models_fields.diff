@@ -1,0 +1,34 @@
+--- a/ooop.py
++++ b/ooop.py
+@@ -129,6 +129,7 @@ class OOOP:
+         self.uid = None
+         self.models = {}
+         self.fields = {}
++        self._loaded_models_fields = False
+ 
+         #has to be uid, cr, parent (the openerp model to get the pool)
+         if len(kwargs) == 3:
+@@ -218,6 +219,23 @@ class OOOP:
+             self.models[model['model']] = model
+             self.__dict__[self.normalize_model_name(model['model'])] = Manager(model['model'], self)
+ 
++    def load_models_fields(self):
++        """force to load fields meta info for all models"""
++        if self._loaded_models_fields:
++            return
++        for mod in self.models.keys():
++            fields = self.execute(mod, 'fields_get')
++            mod_fields = {}
++            for field_name, field in fields.items():
++                field['name'] = field_name
++                field['relation'] = field.get('relation', False)
++                field['ttype'] = field['type']
++                del field['type']
++                mod_fields[field_name] = field
++            self.fields[mod] = mod_fields
++        self._loaded_models_fields = True
++
++
+     def set_model(self, model, r={}, deep=None):
+         """docstring for set_model"""
+         if not model in r.keys():

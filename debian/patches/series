@@ -1,1 +1,3 @@
 fix_print_using_logging.diff
+add_load_models_fields.diff
+add_getalldata_funcs.diff

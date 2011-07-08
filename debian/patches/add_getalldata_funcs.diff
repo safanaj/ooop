@@ -1,0 +1,58 @@
+--- a/ooop.py
++++ b/ooop.py
+@@ -236,6 +236,45 @@ class OOOP:
+         self._loaded_models_fields = True
+ 
+ 
++    def getalldata(self, model, fields=None, offset=0, limit=999999):
++        """
++        """
++        ids = self.all(model)
++        if not ids or model not in self.models: # CHECKTHIS
++            return []
++        if fields is None:
++            self.load_models_fields()
++            fields = self.fields.get(model).keys()
++        data = self.read(model, ids[offset:limit], fields)
++        res = []
++        for item in data:
++            row = {'id': item['id']}
++            for i in fields:
++                row[i] = item[i]
++            res.append(dict2obj(row))
++        return res
++
++
++    def getdata(self, model, ids, fields=None, offset=0, limit=999999):
++        """
++        """
++        if model not in self.models or not ids or \
++               not isinstance(ids, (list, tuple)) or \
++               len(ids) < 1 or not isinstance(ids[0], (int, long)): # CHECKTHIS
++            return []
++        if fields is None:
++            self.load_models_fields()
++            fields = self.fields.get(model).keys()
++        data = self.read(model, ids[offset:limit], fields)
++        res = []
++        for item in data:
++            row = {'id': item['id']}
++            for i in fields:
++                row[i] = item[i]
++            res.append(dict2obj(row))
++        return res
++
++
+     def set_model(self, model, r={}, deep=None):
+         """docstring for set_model"""
+         if not model in r.keys():
+@@ -426,6 +465,9 @@ class List:
+     def __repr__(self):
+         return '<Objects from %s> %i elements' % (self.model, len(self.objects))
+ 
++    def getdata(self, fields=None):
++        return self._ooop.getdata(self.model, self.objects, fields)
++
+ 
+ class Manager:
+     def __init__(self, model, ooop):
