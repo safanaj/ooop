@@ -1,0 +1,23 @@
+--- a/ooop.py
++++ b/ooop.py
+@@ -25,6 +25,7 @@ import time
+ import base64
+ import types
+ from datetime import datetime, date
++from dateutil import parser as dateparser
+ import logging
+ 
+ # check if pydot is installed
+@@ -582,7 +583,11 @@ class Data(object):
+             # convert DateTime instance to datetime.datetime object
+             for i in default_values:
+                 if self.fields[i]['ttype'] == 'datetime':
+-                    t = default_values[i].timetuple()
++                    _dt = default_values[i]
++                    if not hasattr(_dt, 'timetuple'):
++                        _dt = dateparser.parse(str(_dt))
++                        assert hasattr(_dt, 'timetuple')
++                    t = _dt.timetuple()
+                     default_values[i] = datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+             # active by default ?
+             if self._ooop.active:
