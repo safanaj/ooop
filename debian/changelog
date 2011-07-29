@@ -1,3 +1,9 @@
+ooop (0.2.3-servabit1) unstable; urgency=low
+
+  * added some patches
+
+ -- Marco Bardelli <marco.bardelli@servabit.it>  Fri, 29 Jul 2011 11:33:13 +0200
+
 ooop (0.2.3-servabit0) unstable; urgency=low
 
   * Initial release. (forked from github:lasarux/ooop @ ddb6188)
