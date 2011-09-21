@@ -11,7 +11,7 @@ Package: python-ooop
 Section: python
 Priority: extra
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}
+Depends: ${misc:Depends}, ${python:Depends}, python-dateutil
 Provides: ${python:Provides}
 Description: Open Object On Python
  Un API ORM degno di questo nome per l'openerp-server
